@@ -63,10 +63,18 @@ namespace BlockBot
 
                     foreach (var message in messages)
                     {
-                        if(message.Body == "Lock")
+                        switch (message.Body)  
                         {
-                            ComputerOperations.Lock();
+                            case "Lock":
+                                ComputerOperations.Lock();
+                                break;
+                            case "Pause":
+                                ComputerOperations.Pause();
+                                break;
+                            default:
+                                break;
                         }
+                        
                     }
                     var ids = messages.Select(x => (ulong)x.Id);
                     if (ids.Any())

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VkAPI", "VkAPI\VkAPI.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlockBot", "BlockBot\BlockBot.csproj", "{872A4A99-BF5C-4B82-886A-1664E6080C61}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AimpControl", "AimpControl\AimpControl.csproj", "{CA509F87-E117-4B24-807F-47C9132198C9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{872A4A99-BF5C-4B82-886A-1664E6080C61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{872A4A99-BF5C-4B82-886A-1664E6080C61}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{872A4A99-BF5C-4B82-886A-1664E6080C61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA509F87-E117-4B24-807F-47C9132198C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA509F87-E117-4B24-807F-47C9132198C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA509F87-E117-4B24-807F-47C9132198C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA509F87-E117-4B24-807F-47C9132198C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
