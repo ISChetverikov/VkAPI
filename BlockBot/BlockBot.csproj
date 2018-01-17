@@ -82,7 +82,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ComputerOperations.cs" />
+    <Compile Include="AIMP.cs" />
+    <Compile Include="Bot.cs" />
+    <Compile Include="Computer.cs" />
+    <Compile Include="IPlayer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

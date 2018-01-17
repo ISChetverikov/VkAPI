@@ -5,13 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 
+
 namespace BlockBot
 {
-    static class ComputerOperations
+    class AIMP : IPlayer
     {
-        [DllImport("user32")]
-        private static extern void LockWorkStation();
-
         [DllImport("user32.dll")]
         private static extern IntPtr FindWindow(string sClass, string sWindow);
 
@@ -23,15 +21,11 @@ namespace BlockBot
         const int AIMP_RA_CMD_BASE = 10;
         const int AIMP_RA_CMD_PAUSE = AIMP_RA_CMD_BASE + 5;
 
-        public static void Pause()
+        public void Pause()
         {
             var Window = FindWindow(AIMPRemoteAccessClass, null);
             var Result = SendMessage(Window, WM_AIMP_COMMAND, new IntPtr(AIMP_RA_CMD_PAUSE), IntPtr.Zero);
         }
 
-        public static void Lock()
-        {
-            LockWorkStation();
-        }
     }
 }
