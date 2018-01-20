@@ -50,7 +50,7 @@ namespace BlockBot
 
             _Log.Invoke("Authorization passed successfully...");
             _Log.Invoke("====================================");
-            _Log.Invoke("Friends:");
+            
 
             return true;
         }
@@ -60,16 +60,17 @@ namespace BlockBot
             var friendsGetParam = new FriendsGetParams();
             friendsGetParam.Fields = ProfileFields.Nickname;
             var friends = _vk.Friends.Get(friendsGetParam);
-
-            _Log.Invoke("Friends:");
+            
             var messagesSendParams = new MessagesSendParams();
+            messagesSendParams.Message = "Bot is ready to serve to you!";
+            _Log.Invoke("Friends:");
             foreach (User friend in friends)
             {
                 _Log.Invoke($"\t{friend.FirstName} {friend.LastName}");
 
                 messagesSendParams.UserId = friend.Id;
-                messagesSendParams.Message = "Bot is ready to serve to you!";
                 _vk.Messages.Send(messagesSendParams);
+                _vk.Messages.DeleteDialog(friend.Id);
             }
             _Log.Invoke("====================================");
             
@@ -77,6 +78,7 @@ namespace BlockBot
             {
                 var breakFlag = false;
 
+                friends = _vk.Friends.Get(friendsGetParam);
                 var messagesGetHistoryParams = new MessagesGetHistoryParams();
                 foreach (User friend in friends)
                 {
@@ -94,8 +96,8 @@ namespace BlockBot
                     if (ids.Any())
                     {
                         _vk.Messages.MarkAsRead(ids, null);
-                        _vk.Messages.DeleteDialog(friend.Id);
                     }
+                    _vk.Messages.DeleteDialog(friend.Id);
                 }
 
                 if (breakFlag)
@@ -104,9 +106,18 @@ namespace BlockBot
                 Thread.Sleep(1000);
             }
 
+            messagesSendParams.Message = "Bot completed its work...";
+            friends = _vk.Friends.Get(friendsGetParam);
+            foreach (User friend in friends)
+            {
+                messagesSendParams.UserId = friend.Id;
+                _vk.Messages.Send(messagesSendParams);
+                _vk.Messages.DeleteDialog(friend.Id);
+            }
+            _Log.Invoke("====================================");
         }
 
-        public bool ProcessMessage(string msg)
+        private bool ProcessMessage(string msg)
         {
             bool result = false;
             switch (msg)
