@@ -12,7 +12,9 @@ namespace BlockBot
         {
             var bot = new Bot((text) => Console.WriteLine(text));
 
-            bot.Initialize();
+            if (!bot.TryInitialize())
+                return;
+
             bot.Run();
         }
     }

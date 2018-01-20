@@ -9,6 +9,7 @@ using VkNet.Enums.Filters;
 using VkNet.Enums;
 using VkNet.Model.RequestParams;
 using VkNet.Model;
+using VkNet.Exception;
 
 namespace BlockBot
 {
@@ -16,7 +17,7 @@ namespace BlockBot
     {
         const ulong APP_ID = 6329143L;
         const string LOGIN = "79143400153";
-        const string PASSWORD = "Ironman.2209";
+        const string PASSWORD = "Ironman.2201";
         const ulong ID = 363056866L;
 
         Action<string> _Log;
@@ -28,7 +29,7 @@ namespace BlockBot
             _vk = new VkApi();
         }
 
-        public void Initialize()
+        public bool TryInitialize()
         {
             try
             {
@@ -40,18 +41,18 @@ namespace BlockBot
                     Settings = Settings.All
                 });
             }
-            catch (Exception e)
+            catch (VkApiException e)
             {
-                _Log.Invoke("Authorization has been failed!");
-                _Log.Invoke($"Error {e.ToString()}");
-                return;
+                _Log.Invoke("Authorization has failed!");
+                _Log.Invoke($"Error: {e.ToString()}");
+                return false;
             }
 
             _Log.Invoke("Authorization passed successfully...");
             _Log.Invoke("====================================");
             _Log.Invoke("Friends:");
 
-            return;
+            return true;
         }
 
         public void Run()
