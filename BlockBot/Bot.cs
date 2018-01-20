@@ -17,7 +17,7 @@ namespace BlockBot
     {
         const ulong APP_ID = 6329143L;
         const string LOGIN = "79143400153";
-        const string PASSWORD = "Ironman.2201";
+        const string PASSWORD = "Ironman.2209";
         const ulong ID = 363056866L;
 
         Action<string> _Log;
@@ -60,10 +60,16 @@ namespace BlockBot
             var friendsGetParam = new FriendsGetParams();
             friendsGetParam.Fields = ProfileFields.Nickname;
             var friends = _vk.Friends.Get(friendsGetParam);
+
             _Log.Invoke("Friends:");
+            var messagesSendParams = new MessagesSendParams();
             foreach (User friend in friends)
             {
                 _Log.Invoke($"\t{friend.FirstName} {friend.LastName}");
+
+                messagesSendParams.UserId = friend.Id;
+                messagesSendParams.Message = "Bot is ready to serve to you!";
+                _vk.Messages.Send(messagesSendParams);
             }
             _Log.Invoke("====================================");
             
