@@ -73,12 +73,30 @@ namespace BlockBot
                 _vk.Messages.DeleteDialog(friend.Id);
             }
             _Log.Invoke("====================================");
+
+            MainLoop();
             
+            messagesSendParams.Message = "Bot completed its work...";
+            friends = _vk.Friends.Get(friendsGetParam);
+            foreach (User friend in friends)
+            {
+                messagesSendParams.UserId = friend.Id;
+                _vk.Messages.Send(messagesSendParams);
+                _vk.Messages.DeleteDialog(friend.Id);
+            }
+            _Log.Invoke("====================================");
+        }
+
+        private void MainLoop()
+        {
             while (true)
             {
                 var breakFlag = false;
 
-                friends = _vk.Friends.Get(friendsGetParam);
+                var friendsGetParam = new FriendsGetParams();
+                friendsGetParam.Fields = ProfileFields.Nickname;
+                var friends = _vk.Friends.Get(friendsGetParam);
+
                 var messagesGetHistoryParams = new MessagesGetHistoryParams();
                 foreach (User friend in friends)
                 {
@@ -102,19 +120,9 @@ namespace BlockBot
 
                 if (breakFlag)
                     break;
-                
+
                 Thread.Sleep(1000);
             }
-
-            messagesSendParams.Message = "Bot completed its work...";
-            friends = _vk.Friends.Get(friendsGetParam);
-            foreach (User friend in friends)
-            {
-                messagesSendParams.UserId = friend.Id;
-                _vk.Messages.Send(messagesSendParams);
-                _vk.Messages.DeleteDialog(friend.Id);
-            }
-            _Log.Invoke("====================================");
         }
 
         private bool ProcessMessage(string msg)
