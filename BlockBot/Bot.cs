@@ -64,10 +64,11 @@ namespace BlockBot
                 _Log.Invoke($"\t{friend.FirstName} {friend.LastName}");
             }
             _Log.Invoke("====================================");
-
-            int count = 500;
-            while (count-- > 0)
+            
+            while (true)
             {
+                var breakFlag = false;
+
                 var messagesGetHistoryParams = new MessagesGetHistoryParams();
                 foreach (var friend in friends)
                 {
@@ -76,27 +77,46 @@ namespace BlockBot
 
                     foreach (var message in messages)
                     {
-                        switch (message.Body)
-                        {
-                            case "Lock":
-                                Computer.Lock();
-                                break;
-                            case "Pause":
-                                Computer.Player.Pause();
-                                break;
-                            default:
-                                break;
-                        }
-
+                        if (ProcessMessage(message.Body))
+                            breakFlag = true;
                     }
-                    var ids = messages.Select(x => (ulong)x.Id);
+
+                    var ids = messages.Select(x => (long)x.Id);
                     if (ids.Any())
+                    {
+                        _vk.Messages.MarkAsRead(ids, null);
                         _vk.Messages.DeleteDialog(friend.Id);
+                    }
                 }
 
+                if (breakFlag)
+                    break;
                 // TODO Индикатор работы программы
                 Thread.Sleep(1000);
             }
+
+        }
+
+        public bool ProcessMessage(string msg)
+        {
+            bool result = false;
+            switch (msg)
+            {
+                case "Lock":
+                    Computer.Lock();
+                    break;
+                case "Pause":
+                    Computer.Player.Pause();
+                    break;
+                case "Close":
+                    result = true;
+                    _Log.Invoke("Принята команда завершения программы.");
+                    break;
+                default:
+                    break;
+            }
+
+            return result;
         }
     }
 }
