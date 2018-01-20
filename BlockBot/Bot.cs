@@ -59,6 +59,7 @@ namespace BlockBot
             var friendsGetParam = new FriendsGetParams();
             friendsGetParam.Fields = ProfileFields.Nickname;
             var friends = _vk.Friends.Get(friendsGetParam);
+            _Log.Invoke("Friends:");
             foreach (User friend in friends)
             {
                 _Log.Invoke($"\t{friend.FirstName} {friend.LastName}");
@@ -70,13 +71,14 @@ namespace BlockBot
                 var breakFlag = false;
 
                 var messagesGetHistoryParams = new MessagesGetHistoryParams();
-                foreach (var friend in friends)
+                foreach (User friend in friends)
                 {
                     messagesGetHistoryParams.UserId = friend.Id;
                     var messages = _vk.Messages.GetHistory(messagesGetHistoryParams).Messages;
 
-                    foreach (var message in messages)
+                    foreach (Message message in messages)
                     {
+                        _Log($"Request from {friend.FirstName} {friend.LastName}: {message.Body}");
                         if (ProcessMessage(message.Body))
                             breakFlag = true;
                     }
@@ -91,7 +93,7 @@ namespace BlockBot
 
                 if (breakFlag)
                     break;
-                // TODO Индикатор работы программы
+                
                 Thread.Sleep(1000);
             }
 
@@ -110,7 +112,6 @@ namespace BlockBot
                     break;
                 case "Close":
                     result = true;
-                    _Log.Invoke("Принята команда завершения программы.");
                     break;
                 default:
                     break;
