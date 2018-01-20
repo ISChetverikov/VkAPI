@@ -136,10 +136,17 @@ namespace BlockBot
                 case "Pause":
                     Computer.Player.Pause();
                     break;
+                case "Start":
+                    Computer.Player.Start();
+                    break;
+                case "Quit":
+                    Computer.Player.Quit();
+                    break;
                 case "Close":
                     result = true;
                     break;
                 default:
+                    _Log.Invoke($"\tUnknown command: \"{msg}\"");
                     break;
             }
 

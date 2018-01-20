@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace BlockBot
 {
-    interface IPlayer
+    enum WindowsMessages : int
     {
-        void Start();
-        void Pause();
-        void Quit();
+        WM_USER = 0x0400
     }
 }
