@@ -16,8 +16,8 @@ namespace BlockBot
     class Bot
     {
         const ulong APP_ID = 6329143L;
-        const string LOGIN = "79143400153";
-        const string PASSWORD = "Ironman.2209";
+        const string LOGIN = "";
+        const string PASSWORD = "";
         const ulong ID = 363056866L;
 
         Action<string> _Log;
