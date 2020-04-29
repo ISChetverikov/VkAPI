@@ -13,10 +13,10 @@ namespace VkApiTest
 {
     class Program
     {
-        const ulong APP_ID = 6329143L;
-        const string LOGIN = "79143400153";
+        const ulong APP_ID = 6329243L;
+        const string LOGIN = "791434454545";
         const string PASSWORD = "";
-        const ulong ID = 363056866L;
+        const ulong ID = 363026826L;
 
         static void Main(string[] args)
         {
